@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno Guilherme Mendes | Portfólio Profissional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --primary-color: #0066cc;     /* Azul de destaque confiável */
+            --primary-dark: #004d99;
+            --bg-dark: #121214;           /* Fundo escuro do Hero */
+            --bg-light: #f8f9fa;          /* Fundos alternados de seção */
+            --text-main: #333333;         /* Texto principal */
+            --text-muted: #666666;
+            --white: #ffffff;
+            --transition-smooth: all 0.3s ease;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+        }
+
+        body {
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .id-padding {
+            padding: 80px 0;
+        }
+
+        .bg-light {
+            background-color: var(--bg-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- TÍTULOS --- */
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* --- BOTÕES --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--bg-dark);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* --- NAVBAR / HEADER --- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        /* Menu Hamburguer (Mobile) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            transition: var(--transition-smooth);
+            background-color: var(--text-main);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            background: linear-gradient(rgba(18, 18, 20, 0.85), rgba(18, 18, 20, 0.95)), #121214;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            padding-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .hero-content .highlight {
+            color: var(--primary-color);
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+
+        .hero-content .description {
+            max-width: 600px;
+            margin-bottom: 30px;
+            color: #94a3b8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- SOBRE --- */
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            text-align: justify;
+        }
+
+        /* --- HABILIDADES (SKILLS) --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* --- PORTFÓLIO (PROJETOS) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+            border: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .project-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .project-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .project-tags span {
+            background-color: #ebf5ff;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid #edf2f7;
+            padding-top: 15px;
+        }
+
+        .project-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .project-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- CONTATO --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-info .info-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .contact-info .info-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .contact-info .info-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-status {
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* --- RODAPÉ --- */
+        .footer {
+            background-color: #121214;
+            color: #94a3b8;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-content p {
+            margin-bottom: 5px;
+        }
+
+        /* --- RESPONSIVIDADE (MEDIA QUERIES) --- */
+        @media (max-width: 768px) {
+            .id-padding {
+                padding: 60px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                gap: 0;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+                transition: 0.3s;
+            }
+
+            .nav-item {
+                margin: 16px 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#hero" class="logo">BRUNO<span>MENDES</span></a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="#skills" class="nav-link">Habilidades</a></li>
+                <li class="nav-item"><a href="#portfolio" class="nav-link">Portfólio</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contato</a></li>
+            </ul>
+
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-container container">
+                <div class="hero-content">
+                    <h1>Olá, eu sou <br><span class="highlight">Bruno Guilherme Mendes</span></h1>
+                    <p class="subtitle">Tecnólogo em Automação Industrial & Estudante de Engenharia de Controle e Automação</p>
+                    <p class="description"> Técnologo em automação industrial com experiências em progremação de CLP, projetos de segurança NR-12 e grande apaixonado pela tecnologia.</p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn btn-primary">Ver Projetos</a>
+                        <a href="#contact" class="btn btn-secondary">Contato</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section id-padding">
+            <div class="container">
+                <h2 class="section-title">Sobre Mim</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>Este portfólio é um reflexo do meu aprendizado e do meu entusiasmo em construir sistemas modernos. Ao longo da minha jornada no curso de <strong>Design de Interface Web no SENAI MANUEL GARCIA FILHO em Diadema</strong>, tenho explorado as diversas possibilidades do universo da programação, IA e computação em nuvem.</p>
+                        <p>Busco sempre aplicar a lógica de programação de maneira estruturada para criar interfaces que vão além da estética, focando na melhor experiência possível para o usuário. Também tenho forte apreço por colaborações em projetos voluntários, onde cada desafio se torna um aprendizado prático e gratificante.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills-section id-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Habilidades</h2>
+                <p class="section-subtitle">Principais competências técnicas desenvolvidas e aplicadas:</p>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Lógica de Programação</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 90%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Programação de CLP em Ladder</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 85%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Programação de CLP Texto Estruturado</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 80%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Conhecimento em Segurança NR-12</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 80%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>JavaScript</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 75%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Python</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 75%"></span></div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <span>Computação em Nuvem</span>
+                            <span>55%</span>
+                        </div>
+                        <div class="progress-bar"><span style="width: 55%"></span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="portfolio-section id-padding">
+            <div class="container">
+                <h2 class="section-title">Meu Portfólio</h2>
+                <p class="section-subtitle">Projetos práticos aplicando conceitos de Design de Interface, Automação e Desenvolvimento:</p>
+                
+                <div class="portfolio-grid">
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3>Plataforma de Automação & IA</h3>
+                            <p>Interface moderna integrada com scripts inteligentes para otimização de fluxos de dados residenciais e industriais.</p>
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>HTML/CSS</span>
+                                <span>IA</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" target="_blank"><i class="fab fa-github"></i> Código</a>
+                                <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3>Design de Interface Web (SENAI)</h3>
+                            <p>Aplicação focada em UX/UI, garantindo total responsividade, acessibilidade e fluidez para o usuário final.</p>
+                            <div class="project-tags">
+                                <span>JavaScript</span>
+                                <span>CSS Semântico</span>
+                                <span>UX/UI</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" target="_blank"><i class="fab fa-github"></i> Código</a>
+                                <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-info">
+                            <h3>Dashboard em Nuvem</h3>
+                            <p>Painel de controle em nuvem estruturado para ler e analisar dados de métricas de performance em tempo real.</p>
+                            <div class="project-tags">
+                                <span>Cloud</span>
+                                <span>JavaScript</span>
+                                <span>API</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" target="_blank"><i class="fab fa-github"></i> Código</a>
+                                <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section id-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Contato</h2>
+                <p class="section-subtitle">Entre em contato para solicitações de networking e desenvolvimento de projetos.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Endereço</h3>
+                                <p>Cooperativa, São Bernardo do Campo - São Paulo</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p><a href="mailto:bguilhermemendes@gmail.com">bguilhermemendes@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <h3>LinkedIn / GitHub</h3>
+                                <p>https://www.linkedin.com/in/bruno-guilherme-mendes-0175a9231?utm_source=share_via&utm_content=profile&utm_medium=member_android</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Seu Nome" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Seu E-mail" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="5" placeholder="Sua Mensagem" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Enviar Mensagem</button>
+                            <div id="form-status" class="form-status"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Bruno Guilherme Mendes. Todos os direitos reservados.</p>
+            <p>Desenvolvido com foco em alta performance e design responsivo.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- MENU RESPONSIVO (HAMBURGUER) ---
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Fecha o menu mobile ao clicar em qualquer link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+
+            // --- MARCAR LINK ATIVO DURANTE O SCROLL ---
+            const sections = document.querySelectorAll('section');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Define qual seção está atualmente visível na tela
+                    if (pageYOffset >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+
+            // --- SIMULAÇÃO DE ENVIO DO FORMULÁRIO DE CONTATO ---
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Evita recarregar a página
+
+                    // Feedback visual temporário de envio
+                    formStatus.style.color = 'var(--primary-color)';
+                    formStatus.textContent = 'Enviando mensagem...';
+
+                    // Simulação assíncrona de 1.5 segundos (Pronto para integrar APIs externas se desejar)
+                    setTimeout(() => {
+                        formStatus.style.color = '#2e7d32'; // Estilo verde de sucesso
+                        formStatus.textContent = 'Sua mensagem foi enviada. Em breve retorno o contato. Obrigado!';
+                        
+                        // Reseta os campos do formulário
+                        contactForm.reset();
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
