@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bicho Feliz - Portal & Chatbot Veterinário</title>
+    
+    <style>
+        :root {
+            --primary-color: #2ec4b6;
+            --primary-dark: #0f9f90;
+            --secondary-color: #ff9f1c;
+            --bg-color: #f0f4f8;
+            --chat-bg: #ffffff;
+            --text-color: #2b2d42;
+            --user-msg-bg: #2ec4b622;
+            --bot-msg-bg: #f1f5f9;
+            --error-color: #e63946;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 900px;
+            height: 85vh;
+            background: var(--chat-bg);
+            border-radius: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Cabeçalho */
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-dark);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-area .icon { font-size: 2rem; }
+        .logo-area h1 { font-size: 1.4rem; font-weight: 700; }
+        .logo-area p { font-size: 0.85rem; opacity: 0.9; }
+
+        .api-config input {
+            padding: 8px 14px;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            outline: none;
+            width: 200px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .api-config input:focus {
+            width: 240px;
+            border-color: var(--secondary-color);
+        }
+
+        /* Abas de Recursos Extras */
+        .features-nav {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover { background: #f1f5f9; color: var(--primary-dark); }
+        .tab-btn.active {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary-color);
+            background: #ffffff;
+        }
+
+        /* Conteúdo Principal Dinâmico */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tab-panel {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 25px;
+        }
+
+        .tab-panel.active { display: flex; flex-direction: column; }
+
+        /* Área do Chat */
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-bottom: 10px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .system-message {
+            align-self: center;
+            background-color: #f8fafc;
+            text-align: center;
+            font-size: 0.85rem;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            max-width: 90%;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--bot-msg-bg);
+            border-bottom-left-radius: 2px;
+        }
+
+        .error-message {
+            align-self: center;
+            background-color: #fee2e2;
+            color: var(--error-color);
+            border: 1px solid #fca5a5;
+            font-size: 0.85rem;
+        }
+
+        .typing-indicator {
+            padding: 5px 5px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-style: italic;
+            display: none;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px 25px 20px 25px;
+            background-color: #ffffff;
+            border-top: 1px solid #f1f5f9;
+            gap: 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 30px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .chat-input-area input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.15); }
+        .chat-input-area button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background 0.2s;
+        }
+        .chat-input-area button:hover { background-color: #e58e12; }
+
+        /* Formulários e Listas dos Recursos Visuais */
+        .feature-title { margin-bottom: 20px; color: var(--primary-dark); font-size: 1.3rem; display: flex; align-items: center; gap: 8px;}
+        
+        .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .form-group input, .form-group select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-size: 0.95rem; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary-color); }
+        
+        /* Classe utilitária para esconder elementos de forma limpa */
+        .hidden { display: none !important; }
+
+        .btn-action { background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s; max-width: 250px; }
+        .btn-action:hover { background: var(--primary-dark); }
+
+        .data-list { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 15px; }
+        .list-subtitle { font-size: 1rem; color: var(--text-color); font-weight: 600; margin-bottom: 5px; }
+        .card-item { background: #f8fafc; padding: 15px; border-radius: 10px; border-left: 4px solid var(--secondary-color); display: flex; justify-content: space-between; align-items: center; animation: fadeIn 0.3s ease; }
+        .card-item.vacina-card { border-left-color: var(--primary-color); }
+        .card-item h4 { font-size: 0.95rem; }
+        .card-item p { font-size: 0.85rem; color: #64748b; margin-top: 2px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            .app-container { height: 100vh; border-radius: 0; }
+            body { padding: 0; }
+            .grid-form { grid-template-columns: 1fr; }
+            .chat-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .api-config input { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="chat-header">
+            <div class="logo-area">
+                <span class="icon">🐾</span>
+                <div>
+                    <h1>Bicho Feliz</h1>
+                    <p>Clínica Veterinária Integrada</p>
+                </div>
+            </div>
+            <div class="api-config">
+                <input type="password" id="apiKeyInput" placeholder="Insira sua Gemini API Key" required>
+            </div>
+        </header>
+
+        <nav class="features-nav">
+            <button class="tab-btn" onclick="switchTab('chatTab')">💬 Chatbot Veterinário</button>
+            <button class="tab-btn active" onclick="switchTab('agendaTab')">📅 Agendar Consulta/Vacina</button>
+            <button class="tab-btn" onclick="switchTab('vacinaTab')">💉 Histórico de Vacinas Antigas</button>
+        </nav>
+
+        <main class="main-content">
+            
+            <div id="chatTab" class="tab-panel">
+                <div class="chat-box" id="chatBox">
+                    <div class="message system-message">
+                        <b>Sistema Bicho Feliz</b>: Olá! Sou o especialista digital da Bicho Feliz. Posso tirar dúvidas sobre sintomas, comportamento e cuidados de saúde do seu pet. 
+                        <br><small><i>Atenção: Atendo exclusivamente chamados do universo veterinário. Adicione sua API Key acima para iniciar.</i></small>
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">Analisando prontuário e digitando... 🐾</div>
+                <form class="chat-input-area" id="chatForm">
+                    <input type="text" id="userInput" placeholder="Ex: Meu cachorro não quer comer hoje, o que pode ser?" required autocomplete="off">
+                    <button type="submit" id="sendBtn">Enviar</button>
+                </form>
+            </div>
+
+            <div id="agendaTab" class="tab-panel active">
+                <h3 class="feature-title">📅 Agendamento de Consultas e Vacinas</h3>
+                <form id="agendaForm" onsubmit="addAgendamento(event)">
+                    <div class="grid-form">
+                        <div class="form-group">
+                            <label>Nome do Pet</label>
+                            <input type="text" id="petName" required placeholder="Ex: Thor" pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,30}$" title="O nome deve conter apenas letras e ter entre 2 e 30 caracteres.">
+                        </div>
+                        <div class="form-group">
+                            <label>Espécie/Raça</label>
+                            <input type="text" id="petBreed" required placeholder="Ex: Gato Persa" pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s/]{2,30}$" title="Insira uma espécie ou raça válida usando apenas letras.">
+                        </div>
+                        <div class="form-group">
+                            <label>Data do Atendimento</label>
+                            <input type="date" id="appointDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Atendimento</label>
+                            <select id="serviceType" required onchange="toggleVacinaField()">
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <option value="Consulta">Consultas 🩺</option>
+                                <option value="Vacina">Vacina 💉</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="vacinaTypeContainer">
+                            <label>Qual Vacina?</label>
+                            <input type="text" id="specificVacina" placeholder="Ex: Antirrábica, V10, Quádrupla" pattern="^[A-Za-z0-9À-ÖØ-öø-ÿ\s-]{2,30}$" title="Insira o nome da vacina.">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action">Confirmar Agendamento</button>
+                </form>
+
+                <div class="data-list" id="agendaList">
+                    <h4 class="list-subtitle">📋 Atendimentos Registrados</h4>
+                    </div>
+            </div>
+
+            <div id="vacinaTab" class="tab-panel">
+                <h3 class="feature-title">💉 Histórico Geral de Vacinação Antiga</h3>
+                <form id="vacinaForm" onsubmit="addVacina(event)">
+                    <div class="grid-form">
+                        <div class="form-group">
+                            <label>Nome do Pet</label>
+                            <input type="text" id="vacPetName" required placeholder="Ex: Mel" pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,30}$" title="O nome deve conter apenas letras.">
+                        </div>
+                        <div class="form-group">
+                            <label>Vacina Aplicada</label>
+                            <input type="text" id="vacType" required placeholder="Ex: V10, Antirrábica" pattern="^[A-Za-z0-9À-ÖØ-öø-ÿ\s-]{2,30}$" title="Insira o nome da vacina.">
+                        </div>
+                        <div class="form-group">
+                            <label>Data da Aplicação</label>
+                            <input type="date" id="vacDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="vacStatus" required>
+                                <option value="" disabled selected>Selecione o status</option>
+                                <option value="Aplicada">Aplicada ✅</option>
+                                <option value="Agendada">Pendente / Agendada ⏳</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-action">Registrar na Carteirinha</button>
+                </form>
+                <div class="data-list" id="vacinaList"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module">
+        import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+        const chatBox = document.getElementById('chatBox');
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        let chatSession = null;
+
+        function initializeChat(apiKey) {
+            try {
+                const ai = new GoogleGenAI({ apiKey: apiKey });
+                chatSession = ai.chats.create({
+                    model: 'gemini-2.5-flash',
+                    config: {
+                        systemInstruction: "Você é o Dr. Bicho Feliz, um veterinário e assistente virtual altamente qualificado da clínica veterinária 'Bicho Feliz'. Diretriz Crítica: Você só pode responder perguntas e cenários estritamente relacionados à medicina veterinária, saúde, anatomia, comportamento, nutrição e bem-estar de animais de estimação. Se o usuário fizer qualquer pergunta fora do escopo animal ou veterinário, recuse-se polidamente a responder dizendo que seu conhecimento é restrito à saúde dos pets. Sempre lembre de forma amigável que orientações digitais não substituem um check-up presencial na clínica.",
+                    }
+                });
+                return true;
+            } catch (error) {
+                appendMessage('Falha ao conectar com a API do Gemini. Verifique os dados fornecidos.', 'error-message');
+                return false;
+            }
+        }
+
+        function appendMessage(text, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.innerText = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const messageText = userInput.value.trim();
+            const apiKey = apiKeyInput.value.trim();
+            
+            if (!messageText) { userInput.value = ''; return; }
+            if (!apiKey) { alert('Atenção: Digite sua Gemini API Key no topo superior direito.'); return; }
+            if (apiKey.length < 20) { alert('A chave de API inserida parece inválida. Verifique.'); return; }
+
+            if (!chatSession) {
+                const success = initializeChat(apiKey);
+                if (!success) return;
+            }
+
+            appendMessage(messageText, 'user-message');
+            userInput.value = '';
+            typingIndicator.style.display = 'block';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const result = await chatSession.sendMessage({ message: messageText });
+                typingIndicator.style.display = 'none';
+                appendMessage(result.text, 'bot-message');
+            } catch (error) {
+                console.error(error);
+                typingIndicator.style.display = 'none';
+                appendMessage('Erro na requisição externa. Valide o token de acesso inserido.', 'error-message');
+            }
+        });
+    </script>
+
+    <script>
+        // Bloqueia datas passadas ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('appointDate').setAttribute('min', hoje);
+            document.getElementById('vacDate').setAttribute('min', '2000-01-01');
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Controla se o campo de texto extra da vacina deve aparecer ou sumir
+        function toggleVacinaField() {
+            const serviceType = document.getElementById('serviceType').value;
+            const vacinaContainer = document.getElementById('vacinaTypeContainer');
+            const specificVacinaInput = document.getElementById('specificVacina');
+
+            if (serviceType === 'Vacina') {
+                vacinaContainer.classList.remove('hidden');
+                specificVacinaInput.setAttribute('required', 'required');
+            } else {
+                vacinaContainer.classList.add('hidden');
+                specificVacinaInput.removeAttribute('required');
+                specificVacinaInput.value = ''; // Limpa o campo caso mude de ideia
+            }
+        }
+
+        // Registra as consultas e vacinas dinamicamente na tela
+        function addAgendamento(e) {
+            e.preventDefault();
+            
+            const pet = document.getElementById('petName').value.trim();
+            const breed = document.getElementById('petBreed').value.trim();
+            const date = document.getElementById('appointDate').value;
+            const type = document.getElementById('serviceType').value;
+            const specificVacina = document.getElementById('specificVacina').value.trim();
+
+            if (!pet || !breed || !date || !type) {
+                alert('Preencha os campos corretamente.');
+                return;
+            }
+
+            const list = document.getElementById('agendaList');
+            const card = document.createElement('div');
+            
+            // Customiza a aparência e o texto dependendo da escolha (Consulta ou Vacina)
+            if (type === 'Vacina') {
+                card.className = 'card-item vacina-card';
+                card.innerHTML = `
+                    <div>
+                        <h4>💉 Vacina: ${specificVacina} — Pet: ${pet}</h4>
+                        <p>Raça/Espécie: ${breed} | Data Agendada: ${date.split('-').reverse().join('/')}</p>
+                    </div>
+                    <span style="color: var(--primary-dark); font-weight: bold;">Confirmado</span>
+                `;
+            } else {
+                card.className = 'card-item';
+                card.innerHTML = `
+                    <div>
+                        <h4>🩺 Consulta Geral — Pet: ${pet}</h4>
+                        <p>Raça/Espécie: ${breed} | Data Agendada: ${date.split('-').reverse().join('/')}</p>
+                    </div>
+                    <span style="color: var(--secondary-color); font-weight: bold;">Agendado</span>
+                `;
+            }
+
+            // Insere o novo card logo abaixo do subtítulo para manter a ordem
+            list.appendChild(card);
+            
+            // Reseta o formulário e garante que o campo oculto suma novamente
+            document.getElementById('agendaForm').reset();
+            toggleVacinaField();
+        }
+
+        function addVacina(e) {
+            e.preventDefault();
+            const pet = document.getElementById('vacPetName').value.trim();
+            const type = document.getElementById('vacType').value.trim();
+            const date = document.getElementById('vacDate').value;
+            const status = document.getElementById('vacStatus').value;
+
+            const list = document.getElementById('vacinaList');
+            const card = document.createElement('div');
+            card.className = 'card-item vacina-card';
+            card.innerHTML = `
+                <div>
+                    <h4>💉 Histórico: ${type} — Pet: ${pet}</h4>
+                    <p>Aplicado em: ${date.split('-').reverse().join('/')}</p>
+                </div>
+                <span style="color: var(--primary-dark); font-weight: bold;">${status}</span>
+            `;
+            list.prepend(card);
+            document.getElementById('vacinaForm').reset();
+        }
+    </script>
+</body>
+</html>
