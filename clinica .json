@@ -1,0 +1,264 @@
+{
+  "clinica": {
+    "nome": "Bicho Feliz",
+    "slogan": "Clínica Veterinária Integrada",
+    "cnpj": "12.345.678/0001-90",
+    "contato": {
+      "telefone": "(11) 3456-7890",
+      "whatsapp": "(11) 99876-5432",
+      "email": "contato@bichopeliz.com.br",
+      "endereco": "Rua das Palmeiras, 420 - Jardim Primavera, São Paulo - SP, CEP: 04567-000"
+    },
+    "horarios": {
+      "segunda_sexta": "08:00 às 20:00",
+      "sabado": "08:00 às 18:00",
+      "domingo": "09:00 às 14:00 (apenas emergências)",
+      "feriados": "09:00 às 13:00 (apenas emergências)"
+    },
+    "formas_pagamento": ["Dinheiro", "PIX", "Cartão de Débito", "Cartão de Crédito (até 6x sem juros)", "Convênio Pet"]
+  },
+  "servicos": {
+    "consultas": [
+      {
+        "id": "cons_geral",
+        "nome": "Consulta Clínica Geral",
+        "descricao": "Avaliação completa do estado de saúde do pet com exame físico detalhado.",
+        "preco": 120.00,
+        "duracao_minutos": 40,
+        "especies_atendidas": ["Cão", "Gato", "Coelho", "Ave"]
+      },
+      {
+        "id": "cons_retorno",
+        "nome": "Consulta de Retorno",
+        "descricao": "Acompanhamento de tratamento já iniciado na clínica. Válido por 30 dias após a consulta inicial.",
+        "preco": 60.00,
+        "duracao_minutos": 20,
+        "especies_atendidas": ["Cão", "Gato", "Coelho", "Ave"]
+      },
+      {
+        "id": "cons_emergencia",
+        "nome": "Atendimento de Emergência",
+        "descricao": "Atendimento prioritário para casos urgentes, disponível nos horários de emergência.",
+        "preco": 200.00,
+        "duracao_minutos": 60,
+        "especies_atendidas": ["Cão", "Gato", "Coelho", "Ave"]
+      },
+      {
+        "id": "cons_dermatologia",
+        "nome": "Consulta Dermatológica",
+        "descricao": "Especializada em problemas de pele, pelos, unhas e alergias cutâneas.",
+        "preco": 150.00,
+        "duracao_minutos": 50,
+        "especies_atendidas": ["Cão", "Gato"]
+      },
+      {
+        "id": "cons_oftalmologia",
+        "nome": "Consulta Oftalmológica",
+        "descricao": "Avaliação ocular completa com equipamentos especializados.",
+        "preco": 180.00,
+        "duracao_minutos": 45,
+        "especies_atendidas": ["Cão", "Gato"]
+      },
+      {
+        "id": "cons_nutricao",
+        "nome": "Consulta Nutricional",
+        "descricao": "Elaboração de dieta personalizada para o pet conforme idade, peso e condição de saúde.",
+        "preco": 130.00,
+        "duracao_minutos": 45,
+        "especies_atendidas": ["Cão", "Gato", "Coelho"]
+      }
+    ],
+    "vacinas": [
+      {
+        "id": "vac_v8",
+        "nome": "V8 (Óctupla)",
+        "descricao": "Protege contra Cinomose, Hepatite, Parvovirose, Coronavirose, Parainfluenza e 3 tipos de Leptospirose. Para cães.",
+        "preco": 85.00,
+        "especie": "Cão",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_v10",
+        "nome": "V10 (Déupla)",
+        "descricao": "Protege contra as mesmas doenças da V8 acrescidas de mais cepas de Leptospirose. Para cães.",
+        "preco": 95.00,
+        "especie": "Cão",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_antirrabica_cao",
+        "nome": "Antirrábica (Cão)",
+        "descricao": "Vacina obrigatória por lei contra a raiva. Para cães a partir de 3 meses.",
+        "preco": 55.00,
+        "especie": "Cão",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_antirrabica_gato",
+        "nome": "Antirrábica (Gato)",
+        "descricao": "Vacina obrigatória por lei contra a raiva. Para gatos a partir de 3 meses.",
+        "preco": 55.00,
+        "especie": "Gato",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_quadrupla",
+        "nome": "Quádrupla Felina (V4)",
+        "descricao": "Protege contra Panleucopenia, Rinotraqueíte, Calicivirose e Clamidiose. Para gatos.",
+        "preco": 90.00,
+        "especie": "Gato",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_leucemia_felina",
+        "nome": "Leucemia Felina (FeLV)",
+        "descricao": "Vacina contra o vírus da leucemia felina. Recomendada para gatos com acesso à rua.",
+        "preco": 110.00,
+        "especie": "Gato",
+        "reforco": "Anual"
+      },
+      {
+        "id": "vac_gripe_cao",
+        "nome": "Gripe Canina (Bordetella)",
+        "descricao": "Protege contra a tosse dos canis. Recomendada para cães que frequentam pet shops, hotéis e parques.",
+        "preco": 75.00,
+        "especie": "Cão",
+        "reforco": "Anual"
+      }
+    ],
+    "exames": [
+      {
+        "id": "exam_hemograma",
+        "nome": "Hemograma Completo",
+        "descricao": "Análise das células sanguíneas para avaliação geral da saúde.",
+        "preco": 65.00,
+        "prazo_resultado": "24 horas"
+      },
+      {
+        "id": "exam_bioquimico",
+        "nome": "Perfil Bioquímico Completo",
+        "descricao": "Avalia função renal, hepática, glicose e outros marcadores metabólicos.",
+        "preco": 120.00,
+        "prazo_resultado": "24 horas"
+      },
+      {
+        "id": "exam_raio_x",
+        "nome": "Raio-X (por região)",
+        "descricao": "Imagem radiológica de uma região anatômica específica. Laudado por médico veterinário.",
+        "preco": 110.00,
+        "prazo_resultado": "No ato"
+      },
+      {
+        "id": "exam_ultrassom",
+        "nome": "Ultrassonografia Abdominal",
+        "descricao": "Avaliação de órgãos abdominais por imagem de ultrassom.",
+        "preco": 200.00,
+        "prazo_resultado": "No ato"
+      },
+      {
+        "id": "exam_urinálise",
+        "nome": "Urinálise Completa",
+        "descricao": "Análise física, química e microscópica da urina.",
+        "preco": 50.00,
+        "prazo_resultado": "24 horas"
+      },
+      {
+        "id": "exam_ecg",
+        "nome": "Eletrocardiograma (ECG)",
+        "descricao": "Avaliação da atividade elétrica do coração.",
+        "preco": 150.00,
+        "prazo_resultado": "No ato"
+      }
+    ],
+    "cirurgias": [
+      {
+        "id": "cir_castracao_cao_m",
+        "nome": "Castração Canina Macho",
+        "descricao": "Orquiectomia bilateral eletiva. Inclui anestesia, procedimento e medicação pós-operatória básica.",
+        "preco_de": 550.00,
+        "preco_ate": 800.00,
+        "obs": "Valor varia conforme peso e porte do animal. Avaliação pré-cirúrgica obrigatória."
+      },
+      {
+        "id": "cir_castracao_cao_f",
+        "nome": "Castração Canina Fêmea",
+        "descricao": "Ovariosalpingohisterectomia (OSH) eletiva. Inclui anestesia, procedimento e medicação.",
+        "preco_de": 700.00,
+        "preco_ate": 1100.00,
+        "obs": "Valor varia conforme peso, porte e estado reprodutivo. Avaliação pré-cirúrgica obrigatória."
+      },
+      {
+        "id": "cir_castracao_gato_m",
+        "nome": "Castração Felina Macho",
+        "descricao": "Orquiectomia bilateral eletiva para gatos. Inclui anestesia e procedimento.",
+        "preco_de": 350.00,
+        "preco_ate": 450.00,
+        "obs": "Avaliação pré-cirúrgica obrigatória."
+      },
+      {
+        "id": "cir_castracao_gato_f",
+        "nome": "Castração Felina Fêmea",
+        "descricao": "OSH eletiva para gatas. Inclui anestesia e procedimento.",
+        "preco_de": 500.00,
+        "preco_ate": 700.00,
+        "obs": "Avaliação pré-cirúrgica obrigatória."
+      }
+    ],
+    "estetica": [
+      {
+        "id": "est_banho_p",
+        "nome": "Banho (Porte Pequeno)",
+        "descricao": "Banho completo com secagem para pets até 10kg.",
+        "preco": 60.00
+      },
+      {
+        "id": "est_banho_m",
+        "nome": "Banho (Porte Médio)",
+        "descricao": "Banho completo com secagem para pets de 11kg a 25kg.",
+        "preco": 90.00
+      },
+      {
+        "id": "est_banho_g",
+        "nome": "Banho (Porte Grande)",
+        "descricao": "Banho completo com secagem para pets acima de 25kg.",
+        "preco": 130.00
+      },
+      {
+        "id": "est_tosa_higienica",
+        "nome": "Tosa Higiênica",
+        "descricao": "Tosa da região íntima, patas e focinho. Sem formatação de pelo.",
+        "preco": 40.00
+      },
+      {
+        "id": "est_tosa_completa_p",
+        "nome": "Tosa Completa (Porte Pequeno)",
+        "descricao": "Tosa com tesoura ou máquina para pets até 10kg.",
+        "preco": 80.00
+      },
+      {
+        "id": "est_tosa_completa_m",
+        "nome": "Tosa Completa (Porte Médio)",
+        "descricao": "Tosa com tesoura ou máquina para pets de 11kg a 25kg.",
+        "preco": 120.00
+      }
+    ]
+  },
+  "especialidades": [
+    "Clínica Geral",
+    "Dermatologia",
+    "Oftalmologia",
+    "Nutrição e Nutrologia",
+    "Cardiologia",
+    "Oncologia",
+    "Odontologia Veterinária",
+    "Medicina Preventiva e Vacinas"
+  ],
+  "especies_atendidas": ["Cão", "Gato", "Coelho", "Pássaro", "Hamster", "Chinchila"],
+  "diferenciais": [
+    "Laboratório próprio com resultados em 24h",
+    "Internação 24 horas com monitoramento",
+    "UTI Veterinária",
+    "Farmácia veterinária no local",
+    "Estacionamento gratuito"
+  ]
+}
